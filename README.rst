@@ -28,9 +28,13 @@ If you want to be sure that the container works, start an interactive session an
     docker run -i -t elsepa
     ./elscatm < h2o.in
 
+Citation
+~~~~~~~~
+
+.. [1] Sablat, Jablonski and Powell, Computer Physics Communications, Volume 165, Issue 2, 15 January 2005, Pages 157–190, http://www.sciencedirect.com/science/article/pii/S0010465504004795
+
 .. _`Python 3`: http://www.python.org/
 .. _`NumPy`: http://www.numpy.org/
 .. _`Pint`: https://pint.readthedocs.io
 .. _`Docker`: http://www.docker.com/
 .. _`adus_v1_0.tar.gz`: http://www.cpc.cs.qub.ac.uk/summaries/ADUS_v1_0.html
-.. [1] Sablat, Jablonski and Powell, Computer Physics Communications, Volume 165, Issue 2, 15 January 2005, Pages 157–190, http://www.sciencedirect.com/science/article/pii/S0010465504004795
