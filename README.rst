@@ -3,7 +3,7 @@ pyelsepa
 
 This is a Python wrapper for the Fortran code ELSEPA, which does a "Dirac partial-wave calculation of elastic scattering of electrons and positrons by atoms, positive ions and molecules". ELSEPA is described in Sablat, Jablonski and Powell (2005) [1]_ (which is, sadly, behind a paywall). The Fortran source can be downloaded at Elsevier's Computer Physics Communications Program Library `adus_v1_0.tar.gz`_ under a researchers attribution type of license.
 
-This Python wrapper uses [Docker](http://www.docker.com) to wrap the Fortran code in a clean environment.
+This Python wrapper uses `Docker`_ to wrap the Fortran code in a clean environment.
 
 Requirements
 ~~~~~~~~~~~~
@@ -23,7 +23,7 @@ To build the image, you should have downloaded the file `adus_v1_0.tar.gz`_, and
 
     docker build . -t elsepa
 
-If you want to be sure that the container works, start an interactive session and run the H<sub>2</sub>O example::
+If you want to be sure that the container works, start an interactive session and run the :math:`H_2O` example::
 
     docker run -i -t elsepa
     ./elscatm < h2o.in
