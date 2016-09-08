@@ -17,6 +17,7 @@ setup(
     description='Wrapper for ELSEPA: Dirac partial-wave calculation'
     ' of elastic scattering of electrons and positrons by atoms, positive'
     ' ions and molecules.',
+    license='Apache v2',
     author='Johan Hidding',
     author_email='j.hidding@esciencecenter.nl',
     url='https://github.com/eScatter/pyelsepa.git',

@@ -7,6 +7,7 @@ This Python wrapper uses `Docker`_ to wrap the Fortran code in a clean environme
 
 Requirements
 ~~~~~~~~~~~~
+
 * `Python 3`_
 * `NumPy`_
 * `Pint`_
@@ -27,6 +28,17 @@ If you want to be sure that the container works, start an interactive session an
 
     docker run -i -t elsepa
     ./elscatm < h2o.in
+
+Installing
+~~~~~~~~~~
+
+We recommend installing `pyelsepa` in a Python virtual environment. Clone this repository and do::
+
+    pip install .
+
+or install it with user privileges::
+    
+    pip install . --user
 
 Citation
 ~~~~~~~~
