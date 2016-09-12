@@ -2,6 +2,8 @@ from functools import (reduce)
 from copy import (copy)
 from collections import OrderedDict
 
+from .predicates import (Predicate)
+
 
 class TemporaryEntry(object):
     def __init__(self, settings, key):
@@ -43,7 +45,7 @@ class Settings(OrderedDict):
                 super(Settings, d).__setitem__(k, Settings())
             return super(Settings, d).__getitem__(k)
 
-        if type(v) is dict:
+        if isinstance(v, dict) and not isinstance(v, Settings):
             v = Settings(v)
 
         keys = k.split('.')
@@ -62,10 +64,14 @@ class Settings(OrderedDict):
         return self[k]
 
     def __setattr__(self, k, v):
-        if type(v) is dict:
+        if isinstance(v, dict) and not isinstance(v, Settings):
             v = Settings(**v)
 
         self[k] = v
+
+
+def identity(x):
+    return x
 
 
 class Type(object):
@@ -88,14 +94,20 @@ class Type(object):
         (any -> str) A function that transforms the value into a string
         suitable for this application. By default the `__str__` method
         (usual Python print method) is used.
+
+    .. :py:attribute:: parser
+        (str|number|dict -> any) Inverse of transformer. Takes JSON
+        compatible data.
     """
     def __init__(self, description, default=None, check=None,
-                 obligatory=False, transformer=lambda x: x):
+                 obligatory=False, transformer=identity,
+                 parser=identity):
         self.description = description
         self.default = default
         self.check = check
         self.obligatory = obligatory
         self.transformer = transformer
+        self.parser = parser
 
 
 class Model(Settings):
@@ -129,6 +141,23 @@ def check_settings(s: Settings, d: Model):
             raise TypeError(
                     "Type-check for setting `{}` failed: {}".format(k, v))
     return True
+
+
+@Predicate
+def is_settings(obj):
+    return isinstance(obj, Settings)
+
+
+def each_value_conforms(m: Model):
+    @Predicate
+    def _each_value_conforms(s: Settings):
+        for v in s.values():
+            if not check_settings(v, m):
+                return False
+        else:
+            return True
+
+    return _each_value_conforms
 
 
 def apply_defaults_and_check(s: Settings, d: Model):

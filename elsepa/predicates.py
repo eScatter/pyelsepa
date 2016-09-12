@@ -1,5 +1,7 @@
 import numbers
 import collections
+import os
+
 from .units import (units)
 
 
@@ -40,7 +42,10 @@ def is_none(v):
     return v is None
 
 
-def has_units_like(u):
+def has_units(u):
+    if isinstance(u, str):
+        u = units.parse_units(u)
+
     @Predicate
     def _has_units(v):
         return isinstance(v, units.Quantity) and \
@@ -49,9 +54,9 @@ def has_units_like(u):
     return _has_units
 
 
-is_energy = has_units_like(units.J)
-is_length = has_units_like(units.m)
-is_volume = has_units_like(units.m**3)
+is_energy = has_units(units.J)
+is_length = has_units(units.m)
+is_volume = has_units(units.m**3)
 
 
 def in_range(a, b):
@@ -88,3 +93,9 @@ def is_list_of(p):
         return True
 
     return _is_list_of
+
+
+@Predicate
+def file_exists(path: str):
+    abspath = os.path.abspath(path)
+    return os.path.exists(abspath)
