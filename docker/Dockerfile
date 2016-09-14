@@ -11,5 +11,5 @@ RUN tar xf /tmp/adus_v1_0.tar.gz -C opt
 
 # compile
 WORKDIR /opt/elsepa
-RUN f77 -O elscata.f -o elscata && f77 -O elscatm.f -o elscatm
+RUN f77 -O3 elscata.f -o elscata && f77 -O3 elscatm.f -o elscatm
 

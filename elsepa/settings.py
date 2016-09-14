@@ -31,13 +31,15 @@ class Settings(OrderedDict):
     Behaviour of a `Settings` object should mimic Javascript.
     The keys of the dictionary are restricted to be strings.
     """
-    def __init__(self, _data=None, **kwargs):
+    def __init__(self, _data=None, _model=None, **kwargs):
         if _data:
             super(Settings, self).__init__(_data)
         else:
             super(Settings, self).__init__()
         for k, v in kwargs.items():
             self[k] = v
+
+        self._model = _model
 
     def __setitem__(self, k, v):
         def get_or_create(d, k):
@@ -57,13 +59,42 @@ class Settings(OrderedDict):
         obj = reduce(OrderedDict.__getitem__, keys, self)
         return obj
 
+    def __missing__(self, k):
+        err_str = "Key {} doesn't match any entry in settings.".format(k)
+
+        if self._model and k in self._model:
+            default = self._model[k].default
+
+            if default is None:
+                raise KeyError(err_str)
+
+            if callable(default):
+                value = default(self)
+            else:
+                value = default
+
+            self[k] = value
+            return value
+
+        raise KeyError(err_str)
+
+    def __dir__(self):
+        return self.keys()
+
     def __getattr__(self, k):
+        if k not in self and self._model and k in self._model:
+            return self.__missing__(k)
+
         if k not in self:
             return TemporaryEntry(self, k)
 
         return self[k]
 
     def __setattr__(self, k, v):
+        if k[0] == '_':
+            self.__dict__[k] = v
+            return
+
         if isinstance(v, dict) and not isinstance(v, Settings):
             v = Settings(**v)
 

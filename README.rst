@@ -16,13 +16,11 @@ Requirements
 ELSEPA Docker image
 ~~~~~~~~~~~~~~~~~~~
 
-To use the dockerized version of Elsepa, first make sure you have `Docker`_ installed. If you are working in (a Debian/Ubuntu flavoured) GNU Linux, chances are that you can install Docker simply by doing::
-
-    sudo apt install docker
+To use the dockerized version of Elsepa, first make sure you have the *latest version* of `Docker`_ installed. If you are working in (a Debian/Ubuntu flavoured) GNU Linux, please follow the instructions in the `Docker installation manual`_.
 
 To build the image, you should have downloaded the file `adus_v1_0.tar.gz`_, and placed it in the `docker` directory. Then from the `docker` directory (containing `Dockerfile`) run::
 
-    docker build . -t elsepa
+    docker build -t elsepa .
 
 If you want to be sure that the container works, start an interactive session and run the :math:`H_2O` example::
 
@@ -49,4 +47,5 @@ Citation
 .. _`NumPy`: http://www.numpy.org/
 .. _`Pint`: https://pint.readthedocs.io
 .. _`Docker`: http://www.docker.com/
+.. _`Docker installation manual`: https://docs.docker.com/engine/installation/
 .. _`adus_v1_0.tar.gz`: http://www.cpc.cs.qub.ac.uk/summaries/ADUS_v1_0.html
