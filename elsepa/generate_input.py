@@ -44,14 +44,14 @@ format::
 
 import io
 
-from .predicates import (
+from cslib.predicates import (
     is_integer, is_number, is_, in_range, is_length, is_volume,
     is_none, is_energy, Predicate)
 
-from .settings import (
+from cslib.settings import (
     Settings, Model, Type, check_settings)
 
-from .units import (units)
+from cslib import (units)
 
 
 def print_in(unit):

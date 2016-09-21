@@ -1,10 +1,10 @@
 from nose.tools import (eq_)
 
-from elsepa.settings import (
+from cslib.settings import (
     Settings, Model, Type, apply_defaults_and_check)
-from elsepa.predicates import (
+from cslib.predicates import (
     is_integer, in_range, is_string, is_length, is_none)
-from elsepa import units
+from cslib import units
 
 
 simple_model = Model(

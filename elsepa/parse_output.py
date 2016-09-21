@@ -1,48 +1,9 @@
-from .units import units
+from cslib import units, DataFrame
 
 import numpy as np
 import re
-import io
 from itertools import takewhile
 from collections import OrderedDict, Counter
-
-
-class DataFrame(object):
-    """A class like the Pandas DataFrame; this one supports physical units
-    using the `pint` module, and storage to HDF5 files.
-
-    This is a wrapper around a higher dimensional Numpy array.
-
-    The class supports both column and
-    row based access; however, it is optimised to handle entire columns
-    of data more efficiently.
-
-    Rows start counting at 0. Every column must have a unit."""
-    def __init__(self, data, units=None, comments=None):
-        self.data = data
-        self.units = units
-        self.comments = comments
-        self.unit_dict = OrderedDict(zip(self.data.dtype.names, units))
-
-    def __getitem__(self, x):
-        s = self.data[x]
-        if isinstance(x, str):
-            return s * self.unit_dict[x]
-        elif isinstance(x, tuple) and isinstance(x[1], int):
-            return s * self.units[x[1]]
-        elif isinstance(x, tuple) and isinstance(x[1], slice):
-            return DataFrame(s, self.units[x[1]])
-
-    def __len__(self):
-        return len(self.data)
-
-    def __str__(self):
-        of = io.BytesIO()
-        np.savetxt(of, self.data, fmt='%.4e')
-        return '# ' + ', '.join(
-            '{0} ({1:~})'.format(n, u)
-            for n, u in self.unit_dict.items()) + \
-            '\n' + of.getvalue().decode()
 
 
 def arg_first(pred, s):

@@ -1,5 +1,5 @@
-from elsepa.predicates import (is_length, is_none, is_)
-from elsepa import units
+from cslib.predicates import (is_length, is_none, is_)
+from cslib import units
 
 
 def test_unit_predicates():

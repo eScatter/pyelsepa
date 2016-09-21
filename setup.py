@@ -30,7 +30,7 @@ setup(
         'Development Status :: 4 - Beta',
         'Programming Language :: Python :: 3',
         'Topic :: Scientific/Engineering :: Physics'],
-    install_requires=['pint', 'numpy', 'h5py', 'docker-py'],
+    install_requires=['pint', 'numpy', 'docker-py', 'cslib'],
     extras_require={
         'test': ['nose']
     },
