@@ -103,11 +103,12 @@ class RegexDict(OrderedDict):
         for key, value in self.items():
             if re.fullmatch(key, query):
                 return value
-        raise KeyError("None of the patterns matched the query.")
+        raise KeyError("None of the patterns matched the query: {}".format(query))
 
 
 elsepa_output_parsers = RegexDict([
     ("dpwa",     None),
+    ("dpwai",    None),
     ("input",    None),
     ("dcs_.*",   parse_most_elscata_output),
     ("scatamp",  parse_most_elscata_output),
