@@ -41,7 +41,7 @@ or install it with user privileges::
 Citation
 ~~~~~~~~
 
-.. [1] Sablat, Jablonski and Powell, Computer Physics Communications, Volume 165, Issue 2, 15 January 2005, Pages 157–190, http://www.sciencedirect.com/science/article/pii/S0010465504004795
+.. [1] Salvat, Jablonski and Powell, Computer Physics Communications, Volume 165, Issue 2, 15 January 2005, Pages 157–190, http://www.sciencedirect.com/science/article/pii/S0010465504004795
 
 .. _`Python 3`: http://www.python.org/
 .. _`NumPy`: http://www.numpy.org/
