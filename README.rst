@@ -1,7 +1,7 @@
 pyelsepa
 ========
 
-This is a Python wrapper for the Fortran code ELSEPA, which does a "Dirac partial-wave calculation of elastic scattering of electrons and positrons by atoms, positive ions and molecules". ELSEPA is described in Sablat, Jablonski and Powell (2005) [1]_ (which is, sadly, behind a paywall). The Fortran source can be downloaded at Elsevier's Computer Physics Communications Program Library `adus_v1_0.tar.gz`_ under a researchers attribution type of license.
+This is a Python wrapper for the Fortran code ELSEPA, which does a "Dirac partial-wave calculation of elastic scattering of electrons and positrons by atoms, positive ions and molecules". ELSEPA is described in Salvat, Jablonski and Powell (2005) [1]_ (which is, sadly, behind a paywall). The Fortran source can be downloaded at Elsevier's Computer Physics Communications Program Library `adus_v1_0.tar.gz`_ under a researchers attribution type of license.
 
 This Python wrapper uses `Docker`_ to wrap the Fortran code in a clean environment.
 
