@@ -1,7 +1,7 @@
-from nose.tools import (eq_)
+# from pytest import (eq_)
 
 from cslib.settings import (
-    Settings, Model, Type, apply_defaults_and_check)
+    Settings, Model, Type, parse_to_model)
 from cslib.predicates import (
     is_integer, in_range, is_string, is_length, is_none)
 from cslib import units
@@ -37,12 +37,11 @@ def test_js_syntax_02():
 
 
 def test_type_checking_00():
-    s = apply_defaults_and_check(s_1, simple_model)
-    t = apply_defaults_and_check(s_2, simple_model)
-    eq_(s.a, 3)
-    eq_(t.a, 0)
-    eq_(s.b, "bonjour")
-    eq_(t.b, "goedendag")
-    assert s.c is None
-    eq_(t.c, 30 * units.cm)
-
+    s = parse_to_model(simple_model, s_1)
+    t = parse_to_model(simple_model, s_2)
+    assert s.a == 3
+    assert t.a == 0
+    assert s.b == "bonjour"
+    assert t.b == "goedendag"
+    assert 'c' not in s
+    assert t.c == 30 * units.cm

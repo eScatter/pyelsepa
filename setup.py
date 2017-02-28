@@ -30,8 +30,9 @@ setup(
         'Development Status :: 4 - Beta',
         'Programming Language :: Python :: 3',
         'Topic :: Scientific/Engineering :: Physics'],
-    install_requires=['pint', 'numpy', 'docker-py', 'cslib'],
+    install_requires=[
+        'pint', 'numpy', 'docker-py', 'cslib', 'noodles[prov,numpy]'],
     extras_require={
-        'test': ['nose']
+        'test': ['pytest']
     },
 )

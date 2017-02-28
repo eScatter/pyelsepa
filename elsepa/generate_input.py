@@ -71,8 +71,8 @@ Elscata_model = Model([
                     default=4, check=is_integer & in_range(1, 6))),
     ('MUFFIN', Type("0=free atom, 1=muffin-tin model", default=0,
                     check=is_(0) | is_(1))),
-    ('RMUF',   Type("muffin-tin radius (cm)", check=is_length,
-                    transformer=is_none | print_in(units.cm))),
+    ('RMUF',   Type("muffin-tin radius (cm)", check=is_none | is_length,
+                    generator=print_in(units.cm))),
     ('IELEC',  Type("-1=electron, +1=positron", default=-1,
                     check=is_(-1) | is_(+1))),
     ('MEXCH',  Type("V_ex (0=none, 1=FM, 2=TF, 3=RT)", default=1,
@@ -81,7 +81,7 @@ Elscata_model = Model([
                     check=is_integer & in_range(0, 3))),
     ('VPOLA',  Type("atomic polarizability (cm**3)",
                     check=is_none | is_volume,
-                    transformer=print_in(units.cm**3))),
+                    generator=print_in(units.cm**3))),
     ('VPOLB',  Type("b_pol parameter", default=-1,
                     check=is_number)),
     ('MABS',   Type("W_abs (0=none, 1=LDA)", default=0,
@@ -89,12 +89,12 @@ Elscata_model = Model([
     ('VABSA',  Type("absorption-potential strength, Aabs", default=2.0,
                     check=is_number)),
     ('VABSD',  Type("energy gap DELTA (eV)", default=-1.0*units.eV,
-                    check=is_energy, transformer=print_in(units.eV))),
+                    check=is_energy, generator=print_in(units.eV))),
     ('IHEF',   Type("high-E factorization (0=no, 1=yes, 2=Born)",
                     default=1, check=is_number & in_range(0, 3))),
     ('EV',     Type("output kinetic energies (eV)", default=None,
                     check=is_energy & Predicate(lambda x: len(x) > 0),
-                    obligatory=True, transformer=print_in(units.eV)))
+                    obligatory=True, generator=print_in(units.eV)))
 ])
 
 
@@ -114,7 +114,7 @@ def generate_elscata_input(settings: Settings):
             continue
 
         v = settings[k]
-        tr = t.transformer
+        tr = t.generator
 
         if k == 'EV':
             print("{:7}{: .4e} {}".format(k, tr(v[0]), t.description), file=f)
