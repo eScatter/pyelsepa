@@ -31,7 +31,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Topic :: Scientific/Engineering :: Physics'],
     install_requires=[
-        'pint', 'numpy', 'docker-py', 'cslib', 'noodles[prov,numpy]'],
+        'pint', 'numpy', 'docker', 'cslib', 'noodles[prov,numpy]'],
     extras_require={
         'test': ['pytest']
     },

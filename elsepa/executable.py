@@ -73,7 +73,7 @@ class SimpleExecutable(object):
         return result
 
 
-def build_image(client: docker.Client, path: str, name: str):
+def build_image(client: docker.APIClient, path: str, name: str):
     """Build the Docker image as per Dockerfile present in <path>.
     If the docker image with given name is newer than the Dockerfile,
     nothing is done.
@@ -161,7 +161,7 @@ class DockerContainer(object):
     same container upon exit.
     """
 
-    client = docker.Client()
+    client = docker.APIClient()
 
     def __init__(self, image, working_dir=None):
         self.image = image
