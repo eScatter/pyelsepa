@@ -1,5 +1,6 @@
 import subprocess
 import os
+import posixpath
 import sys
 
 try:
@@ -85,8 +86,8 @@ def build_image(client: docker.APIClient, path: str, name: str):
     :param name:
         Name of the image
     """
-    assert os.path.exists(path + '/Dockerfile')
-    time = os.stat(path + '/Dockerfile').st_mtime
+    assert os.path.exists(os.path.join(path, 'Dockerfile'))
+    time = os.stat(os.path.join(path, 'Dockerfile')).st_mtime
 
     il = client.images(name=name)
     if len(il) == 0 or il[0]['Created'] < time:
@@ -185,7 +186,7 @@ class DockerContainer(object):
         :type path: str
         """
         if self.working_dir is not None:
-            path = os.path.join(self.working_dir, path)
+            path = posixpath.join(self.working_dir, path)
 
         self.client.put_archive(
             self.container_id, path, archive.buffer)
@@ -193,8 +194,8 @@ class DockerContainer(object):
     def get_archive(self, path):
         """Get a file or directory from the container and make it into
         an `Archive` object."""
-        if self.working_dir is not None and not os.path.isabs(path):
-            path = os.path.join(self.working_dir, path)
+        if self.working_dir is not None and not posixpath.isabs(path):
+            path = posixpath.join(self.working_dir, path)
 
         strm, stat = self.client.get_archive(
             self.container_id, path)
