@@ -162,7 +162,7 @@ class DockerContainer(object):
     same container upon exit.
     """
 
-    client = docker.APIClient()
+    client = docker.APIClient(version='auto')
 
     def __init__(self, image, working_dir=None):
         self.image = image
