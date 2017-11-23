@@ -1,9 +1,9 @@
 pyelsepa
 ========
 
-This is a Python wrapper for the Fortran code ELSEPA, which does a "Dirac partial-wave calculation of elastic scattering of electrons and positrons by atoms, positive ions and molecules". ELSEPA is described in Salvat, Jablonski and Powell (2005) [1]_ (which is, sadly, behind a paywall). The Fortran source can be downloaded at Elsevier's Computer Physics Communications Program Library `adus_v1_0.tar.gz`_ under a researchers attribution type of license.
+This is a Python wrapper for the Fortran code ELSEPA, which does a "Dirac partial-wave calculation of elastic scattering of electrons and positrons by atoms, positive ions and molecules". ELSEPA is described in Salvat, Jablonski and Powell (2005) [1]_ (which is, sadly, behind a paywall). The original Fortran source can be downloaded at Elsevier's Computer Physics Communications Program Library `adus_v1_0.tar.gz`_ under a researchers attribution type of license.
 
-This Python wrapper uses `Docker`_ to wrap the Fortran code in a clean environment.
+This Python wrapper relies on a slightly modified version of ELSEPA, which can be found on `github`_. The difference is in the use of an environment variable that allows us to run multiple instances of ELSEPA in parallel.
 
 Requirements
 ~~~~~~~~~~~~
@@ -11,21 +11,7 @@ Requirements
 * `Python 3`_
 * `NumPy`_
 * `Pint`_
-* `Docker`_
-
-ELSEPA Docker image
-~~~~~~~~~~~~~~~~~~~
-
-To use the dockerized version of Elsepa, first make sure you have the *latest version* of `Docker`_ installed. If you are working in (a Debian/Ubuntu flavoured) GNU Linux, please follow the instructions in the `Docker installation manual`_.
-
-To build the image, you should have downloaded the file `adus_v1_0.tar.gz`_, and placed it in the `docker` directory. Then from the `docker` directory (containing `Dockerfile`) run::
-
-    docker build -t elsepa .
-
-If you want to be sure that the container works, start an interactive session and run the :math:`H_2O` example::
-
-    docker run -i -t elsepa
-    ./elscatm < h2o.in
+* `Modified ELSEPA`_
 
 Installing
 ~~~~~~~~~~
@@ -38,6 +24,8 @@ or install it with user privileges::
     
     pip install . --user
 
+By default, it is assumed that the ELSEPA binaries are located in ``/opt/elsepa`` and that the data is located in ``/opt/elsepa/data``.
+
 Citation
 ~~~~~~~~
 
@@ -46,6 +34,6 @@ Citation
 .. _`Python 3`: http://www.python.org/
 .. _`NumPy`: http://www.numpy.org/
 .. _`Pint`: https://pint.readthedocs.io
-.. _`Docker`: http://www.docker.com/
-.. _`Docker installation manual`: https://docs.docker.com/engine/installation/
+.. _`github`: https://github.com/eScatter/elsepa
+.. _`Modified ELSEPA`: https://github.com/eScatter/elsepa
 .. _`adus_v1_0.tar.gz`: http://www.cpc.cs.qub.ac.uk/summaries/ADUS_v1_0.html
