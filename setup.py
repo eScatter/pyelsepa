@@ -12,7 +12,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='pyelsepa',
-    version='0.1.1',
+    version='0.2.0',
     long_description=long_description,
     description='Wrapper for ELSEPA: Dirac partial-wave calculation'
     ' of elastic scattering of electrons and positrons by atoms, positive'
@@ -31,7 +31,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Topic :: Scientific/Engineering :: Physics'],
     install_requires=[
-        'pint==0.8.1', 'numpy==1.13.0', 'docker==2.4.0', 'cslib', 'noodles[prov,numpy]==0.2.3'],
+        'pint==0.8.1', 'numpy==1.13.0', 'cslib'],
     extras_require={
         'test': ['pytest']
     },

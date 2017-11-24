@@ -1,32 +1,51 @@
 from elsepa.generate_input import (generate_elscata_input, Settings)
 from elsepa.parse_output import (elsepa_output_parsers)
-from elsepa.executable import (DockerContainer, Archive)
 
 import re
+import os
+import glob
+import shutil
+import subprocess
+import tempfile
 
+# Run elscata.
+# By default, the ELSEPA path is found from $PATH and the data folder
+# is found from the ELSEPA_DATA environment variable.
+# They may be overridden by providing the last two parameters.
+def elscata(settings: Settings, elsepa_dir=None, elsepa_data_dir=None):
+   # Get path to the elscata binary and data directory.
+    elscata_binary = shutil.which('elscata') if elsepa_dir is None \
+                     else os.path.join(elsepa_dir, 'elscata')
+    elsepa_data_dir = os.environ.get('ELSEPA_DATA') if elsepa_data_dir is None \
+                      else elsepa_data_dir
 
-def elscata(settings: Settings):
-    with DockerContainer('elsepa', working_dir='/opt/elsepa') as elsepa:
-        elsepa.put_archive(
-            Archive('w')
-            .add_text_file('input.dat', generate_elscata_input(settings))
-            .close())
+    # Check if they are actually accessible
+    if not os.path.isfile(elscata_binary):
+        raise FileNotFoundError('Unable to find the elscata binary')
+    if not os.path.isfile(os.path.join(elsepa_data_dir, 'z_001.den')):
+        raise FileNotFoundError('Unable to find the ELSEPA data directory')
 
-        elsepa.sh('./elscata < input.dat',
-                  'mkdir result && mv *.dat result')
+    result = {}
 
-        result_tar = elsepa.get_archive('result')
-        result = {}
+    with tempfile.TemporaryDirectory() as elsepa_output_dir:
+        # Run elscata
+        elscata_environment = os.environ.copy()
+        elscata_environment['ELSEPA_DATA'] = elsepa_data_dir
 
-        for info in result_tar:
-            if not info.isfile():
-                continue
+        subprocess.run(elscata_binary,
+                       input=bytes(generate_elscata_input(settings), 'utf-8'),
+                       stdout=subprocess.DEVNULL,
+                       cwd=elsepa_output_dir,
+                       env=elscata_environment)
 
-            name = re.match("result/(.*)\\.dat", info.name).group(1)
+        # Collect output
+        for fn in glob.glob(os.path.join(elsepa_output_dir, '*.dat')):
+            name = re.match("(.*)\\.dat", os.path.basename(fn)).group(1)
             parser = elsepa_output_parsers[name]
 
             if parser:
-                lines = result_tar.get_text_file(info).split('\n')
+                with open(fn, "r") as f:
+                    lines = f.readlines()
                 result[name] = parser(lines)
 
     return result
