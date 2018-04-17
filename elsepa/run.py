@@ -6,13 +6,13 @@ import re
 
 
 def elscata(settings: Settings):
-    with DockerContainer('elsepa', working_dir='/opt/elsepa') as elsepa:
+    with DockerContainer('elsepa', working_dir='/root') as elsepa:
         elsepa.put_archive(
             Archive('w')
             .add_text_file('input.dat', generate_elscata_input(settings))
             .close())
 
-        elsepa.sh('./elscata < input.dat',
+        elsepa.sh('elscata < input.dat',
                   'mkdir result && mv *.dat result')
 
         result_tar = elsepa.get_archive('result')
