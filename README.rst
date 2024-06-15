@@ -48,4 +48,4 @@ Citation
 .. _`Pint`: https://pint.readthedocs.io
 .. _`Docker`: http://www.docker.com/
 .. _`Docker installation manual`: https://docs.docker.com/engine/installation/
-.. _`adus_v1_0.tar.gz`: http://www.cpc.cs.qub.ac.uk/summaries/ADUS_v1_0.html
+.. _`adus_v1_0.tar.gz`: https://data.mendeley.com/datasets/5zzrz874tt/1
